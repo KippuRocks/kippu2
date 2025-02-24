@@ -1,0 +1,19 @@
+{
+  "name": "@kippu/auth0",
+  "version": "1.0.3",
+  "description": "Provides Auth0 Utilities",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "author": "Julian Pardo <jd.pardo@uniandes.edu.co>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^4.0.1"
+  },
+  "devDependencies": {
+    "@kippu/eslint-config": "*",
+    "@kippu/typescript-config": "*"
+  }
+}

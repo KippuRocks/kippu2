@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -9,8 +10,10 @@ import { TickettoClientContext } from "@kippu/ticketto-react-provider";
 import { Identicon } from "@polkadot/react-identicon";
 import { Container, Paper, Stack, Typography } from "@mui/material";
 import parsePhoneNumber from "libphonenumber-js";
+import { useTranslations } from "next-intl";
 
 export default function RootPage() {
+  const t = useTranslations("Validate");
   const [accounts, setAccounts] = useState<Account[]>([]);
   const client = useContext(TickettoClientContext);
   const router = useRouter();
@@ -36,6 +39,7 @@ export default function RootPage() {
         spacing={2}
         sx={{ width: "100%", height: "100dvh" }}
       >
+        {t("validateTitle")}
         {accounts.map((account) => (
           <Paper
             key={account.id.toString()}

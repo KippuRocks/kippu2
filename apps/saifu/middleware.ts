@@ -1,30 +1,19 @@
-import { NextResponse, NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth0 } from "@kippu/auth0";
 
-export function middleware(request: NextRequest) {
-  const url = new URL(request.url);
-  const headers = request.headers;
-  headers.set("x-url", url.pathname);
-
-  if (request.cookies.has("accountId")) {
-    return url.pathname !== "/"
-      ? NextResponse.next({
-          request: {
-            headers,
-          },
-        })
-      : NextResponse.redirect(new URL("/events", url));
-  }
-
-  // Redirect to login page if not authenticated
-  return url.pathname === "/"
-    ? NextResponse.next({
-        request: {
-          headers,
-        },
-      })
-    : NextResponse.redirect(new URL("/", url));
+export async function middleware(request: NextRequest) {
+  console.log(request);
+  return await auth0.middleware(request);
 }
 
 export const config = {
-  matcher: ["/", "/events/:path*", "/tickets/:path*"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ],
 };
